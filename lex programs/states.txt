@@ -1,0 +1,16 @@
+states alphabet digit keyword identifier symbol operator space
+0	1	1	-1	-1	4	5	-1
+1	1	1	-1	2	2	2	2
+2	-1	-1	6	7	4	5	-1
+4	1	1	-1	-1	4	5	0	
+5	1	1	-1	-1	4	5	0
+6	-1	-1	-1	-1	0	0	0
+7	-1	-1	-1	-1	0	0	0
+
+state 0 input
+state 1 intermediate state alphabets and digits are looping in this state
+state 2 requires checking the file inorder to find keyword or identifier
+state 6 final state keywords
+state 7 final state identifiers
+state 4 final state symbols
+state 5 final state operators 

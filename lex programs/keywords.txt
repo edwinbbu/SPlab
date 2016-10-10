@@ -1,0 +1,17 @@
+void
+main
+return
+if
+else
+for
+while
+int
+char
+float
+double
+printf
+scanf
+break
+case
+switch
+do

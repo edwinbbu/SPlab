@@ -1,0 +1,5 @@
+E->TF
+F->+TF
+T->GU
+U->*GU
+G->(E)
