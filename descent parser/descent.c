@@ -37,14 +37,17 @@ void main()
 
 void E()
 {
+	printf("E->TE'\n");
 	T();
 	Eprime();
 }
 
 void Eprime()
 {
+	
 	if(input[i]=='+')
 	{
+		printf("E'->+TE'\n");
 		i++;
 		T();
 		Eprime();
@@ -53,14 +56,17 @@ void Eprime()
 
 void T()
 {
+	printf("T->FT'\n");
 	F();
 	Tprime();
 }
 
 void Tprime()
 {
+	
 	if(input[i]=='*')
 	{
+		printf("T'->*FT'\n");
 		i++;
 		F();
 		Tprime();
@@ -69,12 +75,13 @@ void Tprime()
 
 void F()
 {
-	if(isalnum(input[i]))
-	{
+	if(isalnum(input[
+		printf("F->id\n");
 		i++;
 	}
 	else if(input[i]=='(')
 	{
+		printf("F->(E)\n");
 		i++;
 		E();
 		if(input[i]==')')
