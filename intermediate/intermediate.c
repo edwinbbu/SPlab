@@ -1,192 +1,139 @@
 #include<stdio.h>
 #include<string.h>
-#include<ctype.h>
-int precedence(char A);
+
+char stack[10],stack2[10],item;
+int top=-1,i,top2=-1,j;
+
+int precedence(char ch)
+{
+	switch(ch)
+	{
+		case '+':
+			return 1;
+			break;
+		case '-':
+			return 1;
+			break;
+		case '*':
+			return 2;
+			break;
+		case '/':
+			return 2;
+			break;
+		case '^':
+			return 3;
+			break;
+	}
+}
+void push(char item)
+{
+	if(top<9)
+	{
+		top++;
+		stack[top]=item;
+	}
+}	
+
+void push2(char item)
+{
+	if(top2<9)
+	{
+		top2++;
+		stack2[top2]=item;
+	}
+}
+
+void display()
+{
+	for(i=0;i<=top;i++)
+	{
+		printf("%c",stack[i]);
+	}
+	printf("\n");
+}
+
+void display2()
+{
+	for(i=0;i<=top;i++)
+	{
+		printf("%c",stack2[i]);
+	}
+	printf("\n");
+}
+
+char tstack()
+{
+	return stack[top];
+}
+
+char tstack2()
+{
+	return stack2[top2];
+}
+
+char pop2()
+{
+	item=stack2[top2];
+	top2--;
+	return item;
+}
+char pop()
+{
+	item=stack[top];
+	top--;
+	return item;
+}
+
 void main()
 {
-
-char S[100];
-char I[100],tI[100];
-char P[100];
-int top=-1;
-int i;
-int j=0;
-int len=0;
-int ptr,ptr2,ptrc,ptr2c;
-char var='A',oper[50];
-char a,b,tVar[10],op,t2Var[10];
-int ti=0,i1,i2,i3;
-printf("Enter the expression:");
-//scanf("%[^\n]",I);
-scanf("%s",I);
-strcpy(tI,I);
-
-len=strlen(I);
-
-for(i=0;i<len;i++)
-{
-
-if(isalnum(I[i]))
-{
-P[j]=I[i];
-j++;
-}
-
-else if(I[i]=='(')
-{
-top++;
-S[top]=I[i];
-}
-
-else if(I[i]==')')
-{
-
-while(S[top]!='(')
-{
-
-P[j]=S[top];
-top--;
-j++;
-}
-
-top--;
-
-
-}
-
-else
-{
-
-while(precedence(I[i])<=precedence(S[top]))
-{
-P[j]=S[top];
-top--;
-j++;
-}
-
-top++;
-S[top]=I[i];
-}
-
-}
-
-while(top!=-1)
-{
-P[j]=S[top];
-j++;
-top--;
-}
-
-P[j]='\0';
-
-//strcpy(CP,P);
-
-puts(P);
-
-ptr=0;
-ptr2=0;
-
-
-	while(P[ptr]!='\0')
-	{	
-		if(isalpha(P[ptr]))
+	char table[10]="*/+-";
+	char input[20];
+	char temp[10]={'A','B','C','D','E','F'};
+	int index,m=0;
+	char var1,var2,op;
+	printf("Enter the string to input:");
+	scanf("%s",&input);
+	for(i=0;i<(strlen(input));i++)
+	{
+		
+		if(isalpha(input[i]))
 		{
-
-			oper[ptr2++]=P[ptr++];
-
+			push(input[i]);
 		}
 		else
-		{
-			
-			ptr2--;
-			
-
-			a=oper[ptr2];
-			b=oper[ptr2-1];
-			ptr2--;
-		    op=P[ptr];
-		    ptr++;
-		
-			printf("\n%c = %c %c %c",var,b,op,a);
-			
-			ti=0;
-			tVar[ti++]=b;
-			tVar[ti++]=op;
-			tVar[ti++]=a;
-			tVar[ti]='\0';
-			
-			for(i1=0;i1<len-2;i1++)
+		{	
+			x:	
+			if(precedence(input[i])<precedence(tstack2()))
 			{
-				
-			    i2=0;
-				t2Var[i2++]=tI[i1];
-				t2Var[i2++]=tI[i1+1];
-				t2Var[i2++]=tI[i1+2];
-				t2Var[i2]='\0';
-					
-				if(strcmp(tVar,t2Var)==0)
-				{
-					i3=i1;
-				   //printf("\nyes");
-				    tI[i3]=var;
-					i3=i3+1;
-					while(tI[i3+2]!='\0')
-					{
-					    tI[i3++]=tI[i3+1];						
-					} 	
-					tI[i3]='\0';
-					
-					break;
-					
-	         	}
-												
+				var1=pop();
+				op=pop2();
+				var2=pop();
+				printf("%c=%c%c%c\n",temp[m],var2,op,var1);
+				push(temp[m]);
+				m++;
+				goto x;
 			}
-			printf("\t%s",tI);						
-			oper[ptr2++]=var;
-			var=var+1;
-		}	
+			push2(input[i]);	
+				
+		}
 	}
-printf("\n");
+	printf("\t\tStack alphabet:");
+	display();
+	printf("\t\tStack operator:");
+	display2();
+	while(top2>=0)
+	{
+		var1=pop();
+		op=pop2();
+		var2=pop();
+		printf("%c=%c%c%c\n",temp[m],var2,op,var1);
+		push(temp[m]);
+		m++;
+		printf("\t\tStack alphabet:");
+		display();
+		printf("\t\tStack operator:");
+		display2();
+	}
 
 }
-
-int precedence(char A)
-{
-
-switch(A)
-{
-
-case '(':
-
-return 0;
-break;
-
-case '+':
-return 1;
-
-break;
-
-case '-':
-return 1;
-break;
-
-case '*':
-
-return 2;
-break;
-
-case '/':
-
-return 2;
-break;
-
-case '^':
-
-return 3;
-break;
-}
-
-}
-
-
 

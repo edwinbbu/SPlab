@@ -4,6 +4,27 @@
 char stack[10],stack2[10],item;
 int top=-1,i,top2=-1,j;
 
+int precedence(char ch)
+{
+	switch(ch)
+	{
+		case '+':
+			return 1;
+			break;
+		case '-':
+			return 1;
+			break;
+		case '*':
+			return 2;
+			break;
+		case '/':
+			return 2;
+			break;
+		case '^':
+			return 3;
+			break;
+	}
+}
 void push(char item)
 {
 	if(top<9)
@@ -33,7 +54,7 @@ void display()
 
 void display2()
 {
-	for(i=top2;i>=0;i--)
+	for(i=0;i<=top;i++)
 	{
 		printf("%c",stack2[i]);
 	}
@@ -67,7 +88,9 @@ void main()
 {
 	char table[10]="*/+-";
 	char input[20];
-	int index;
+	char temp[10]={'A','B','C','D','E','F'};
+	int index,m=0;
+	char var1,var2,op;
 	printf("Enter the string to input:");
 	scanf("%s",&input);
 	for(i=0;i<(strlen(input));i++)
@@ -77,20 +100,37 @@ void main()
 			push(input[i]);
 		}
 		else
-		{
-			push2(input[i]);
-			if(input[i][j]>alpha[j])
+		{			
+			if(precedence(input[i])<precedence(tstack2()))
 			{
-				
+				var1=pop();
+				op=pop2();
+				var2=pop();
+				printf("%c=%c%c%c\n",temp[m],var2,op,var1);
+				push(temp[m]);
+				m++;
 			}
+			push2(input[i]);	
+				
 		}
 	}
+	printf("\t\tStack alphabet:");
 	display();
+	printf("\t\tStack operator:");
 	display2();
-	char alpha,symbol;
-	alpha=tstack();
-	symbol=tstack2();
-	printf("Alphabet top:%c\n",alpha);
-	printf("Symbol top:%c\n",symbol);
+	while(top2>=0)
+	{
+		var1=pop();
+		op=pop2();
+		var2=pop();
+		printf("%c=%c%c%c\n",temp[m],var2,op,var1);
+		push(temp[m]);
+		m++;
+		printf("\t\tStack alphabet:");
+		display();
+		printf("\t\tStack operator:");
+		display2();
+	}
+
 }
 
